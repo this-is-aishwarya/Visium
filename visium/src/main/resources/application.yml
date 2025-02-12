@@ -1,0 +1,22 @@
+spring:
+  data:
+  mongodb:
+    uri: mongodb+srv://devuser:devuser123@cluster0.2xlic.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    database: visium
+    auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: example@gmail.com
+    password: xxxxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /uptime
