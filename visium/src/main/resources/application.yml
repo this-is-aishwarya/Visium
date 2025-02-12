@@ -1,7 +1,7 @@
 spring:
   data:
   mongodb:
-    uri: mongodb+srv://devuser:devuser123@cluster0.2xlic.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    uri:
     database: visium
     auto-index-creation: true
   mail:
