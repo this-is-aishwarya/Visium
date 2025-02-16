@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Document(collection = "monitorlog")
 @Getter
@@ -12,10 +13,11 @@ import java.time.LocalDateTime;
 public class MonitorLog {
 
     @Id
-    private Long id;
-    private Monitor monitor;
+    private String id;
+    private String monitorId;
+    private String url;
     private String status;
-    private int responseTimeMs;
+    private long responseTimeMs;
     private String errorMessage;
-    private LocalDateTime timestamp;
+    private LocalDateTime lastChecked;
 }

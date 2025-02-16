@@ -11,8 +11,11 @@ import java.util.List;
 public class MonitorService {
     @Autowired
     private MonitorRepository monitorRepository;
+    @Autowired
+    private PingService pingService;
 
     public void createNewMonitor(Monitor monitor){
+        pingService.createMonitorLog(monitor);
         monitorRepository.save(monitor);
     }
 
