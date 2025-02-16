@@ -28,7 +28,5 @@ public class User {
     private String email;
     @NonNull
     private String password;
-    @DBRef
-    private List<Monitor> monitor = new ArrayList<>();
 //    private List<String> roles;
 }

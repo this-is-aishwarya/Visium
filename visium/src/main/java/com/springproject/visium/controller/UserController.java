@@ -24,7 +24,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PutMapping
+    @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody User user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
@@ -35,7 +35,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deleteUser")
     public ResponseEntity<?> deleteUser(@RequestBody User user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
