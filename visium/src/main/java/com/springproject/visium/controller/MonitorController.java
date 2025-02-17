@@ -1,6 +1,7 @@
 package com.springproject.visium.controller;
 
 import com.springproject.visium.entity.Monitor;
+import com.springproject.visium.entity.MonitorLog;
 import com.springproject.visium.entity.User;
 import com.springproject.visium.service.MonitorService;
 import com.springproject.visium.service.UserService;
@@ -42,5 +43,11 @@ public class MonitorController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         return monitorService.getAllMonitors(userName);
+    }
+
+    @GetMapping("/getAllMonitorLog/{monitorId}")
+    public List<MonitorLog> getAllMonitorLog(@PathVariable String monitorId){
+        SecurityContextHolder.getContext().getAuthentication();
+        return monitorService.getMonitorLog(monitorId);
     }
 }

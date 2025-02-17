@@ -1,4 +1,4 @@
-package com.springproject.visium.controller;
+package com.springproject.visium.repository;
 
 import com.springproject.visium.entity.MonitorLog;
 import org.springframework.data.mongodb.repository.MongoRepository;

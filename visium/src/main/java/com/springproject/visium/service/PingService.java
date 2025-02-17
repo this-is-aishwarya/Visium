@@ -1,26 +1,60 @@
 package com.springproject.visium.service;
 
-import com.springproject.visium.controller.MonitorLogRepository;
+import com.springproject.visium.repository.MonitorLogRepository;
 import com.springproject.visium.entity.Monitor;
 import com.springproject.visium.entity.MonitorLog;
+import com.springproject.visium.repository.MonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
 
 @Service
 public class PingService {
 
     @Autowired
     private MonitorLogRepository monitorLogRepository;
+    @Autowired
+    private MonitorRepository monitorRepository;
+    @Autowired
+    private TaskScheduler taskScheduler;
 
-    public void createMonitorLog(Monitor monitor){
+    private ConcurrentHashMap<String, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
+
+    public void initializeMonitoring() {
+        List<Monitor> monitors = monitorRepository.findAll();
+        for (Monitor monitor : monitors) {
+            scheduleMonitor(monitor);
+        }
+    }
+
+    public void scheduleMonitor(Monitor monitor) {
+        // Cancel existing schedule if it exists
+        if (scheduledTasks.containsKey(monitor.getId())) {
+            scheduledTasks.get(monitor.getId()).cancel(false);
+        }
+
+        Runnable task = () -> checkMonitor(monitor);
+
+        // Schedule the task with intervalSeconds
+        ScheduledFuture<?> future = taskScheduler.scheduleAtFixedRate(task, Instant.now(), Duration.ofMillis(monitor.getIntervalSeconds() * 1000L));
+        scheduledTasks.put(monitor.getId(), future);
+    }
+
+
+    public void checkMonitor(Monitor monitor){
         long startTime = System.currentTimeMillis();
         String status;
         String errorMessage = null;
@@ -33,7 +67,7 @@ public class PingService {
         }
         else if(responseTime > monitor.getResponseTimeThresholdMs()){
             status = "DEGRADED";
-            errorMessage = "Respoonse timeout exceeded the threshold";
+            errorMessage = "Response timeout exceeded the threshold";
         }
         else{
             status = "UP";
@@ -59,7 +93,6 @@ public class PingService {
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(timeout);
             int code = connection.getResponseCode();
-            System.out.println("" + code);
             return (200 <= code && code <= 399);
         } catch (MalformedURLException e) {
             e.printStackTrace();
