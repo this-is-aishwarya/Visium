@@ -2,13 +2,10 @@ package com.springproject.visium.controller;
 
 import com.springproject.visium.entity.Monitor;
 import com.springproject.visium.entity.MonitorLog;
-import com.springproject.visium.entity.User;
 import com.springproject.visium.service.MonitorService;
-import com.springproject.visium.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +28,7 @@ public class MonitorController {
             String userName = authentication.getName();
             monitorDetails.setUsername(userName);
             monitorService.createNewMonitor(monitorDetails);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Monitor has been created", HttpStatus.OK);
         } catch (Exception e) {
             log.error(String.valueOf(e.getCause()));
             return new ResponseEntity<>("Incorrect details", HttpStatus.BAD_REQUEST);

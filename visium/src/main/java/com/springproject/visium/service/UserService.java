@@ -1,5 +1,6 @@
 package com.springproject.visium.service;
 
+import com.mongodb.DuplicateKeyException;
 import com.springproject.visium.entity.User;
 import com.springproject.visium.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void saveEntry(User user){
+    public void saveEntry(User user) throws DuplicateKeyException {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

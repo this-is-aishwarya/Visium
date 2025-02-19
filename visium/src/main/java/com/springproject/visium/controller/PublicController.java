@@ -34,9 +34,14 @@ public class PublicController {
     }
 
     @PostMapping("/signup")
-    public String createUser(@RequestBody User user){
-        userService.saveEntry(user);
-        return "User has been created";
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        try{
+            userService.saveEntry(user);
+            return new ResponseEntity<>("User has been created", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("User exists", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/login")
@@ -47,7 +52,8 @@ public class PublicController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
             return new ResponseEntity<>(jwt, HttpStatus.OK);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return new ResponseEntity<>("Incorrect username or password", HttpStatus.BAD_REQUEST);
         }
     }
