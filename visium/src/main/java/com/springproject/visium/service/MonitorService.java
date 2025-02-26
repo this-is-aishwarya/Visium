@@ -20,8 +20,8 @@ public class MonitorService {
     private PingService pingService;
 
     public void createNewMonitor(Monitor monitor){
-        pingService.checkMonitor(monitor);
         monitorRepository.save(monitor);
+        pingService.checkMonitor(monitor);
     }
 
     public List<Monitor> getAllMonitors(String username){
@@ -30,5 +30,14 @@ public class MonitorService {
 
     public List<MonitorLog> getMonitorLog(String monitorId){
         return monitorLogRepository.findAllByMonitorId(monitorId);
+    }
+
+    public void deleteMonitor(String monitorId){
+         monitorRepository.deleteById(monitorId);
+         monitorLogRepository.deleteByMonitorId(monitorId);
+    }
+
+    public List<MonitorLog> getLatestLogs(String monitorId){
+        return monitorLogRepository.findTop10ByMonitorIdOrderByLastCheckedDesc(monitorId);
     }
 }

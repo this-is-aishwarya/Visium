@@ -4,6 +4,7 @@ import com.springproject.visium.repository.MonitorLogRepository;
 import com.springproject.visium.entity.Monitor;
 import com.springproject.visium.entity.MonitorLog;
 import com.springproject.visium.repository.MonitorRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,11 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
+@Slf4j
 @Service
 public class PingService {
 
@@ -30,6 +30,8 @@ public class PingService {
     private MonitorRepository monitorRepository;
     @Autowired
     private TaskScheduler taskScheduler;
+    @Autowired
+    private MonitorLogService monitorLogService;
 
     private ConcurrentHashMap<String, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
 
@@ -72,6 +74,7 @@ public class PingService {
         else{
             status = "UP";
         }
+        log.info("Status and error {} and {}",status, errorMessage);
         monitor.setStatus(status);
         monitor.setLastChecked(LocalDateTime.now());
 
@@ -83,16 +86,19 @@ public class PingService {
         newlog.setLastChecked(monitor.getLastChecked());
         newlog.setErrorMessage(errorMessage);
         monitorLogRepository.save(newlog);
+        monitorLogService.sendLogUpdate(newlog);
     }
 
     public boolean pingURL(String url, int timeout) {
         HttpURLConnection connection = null;
         try {
             URL u = new URL(url);
+            log.info("Checking for url {}", url);
             connection = (HttpURLConnection) u.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(timeout);
             int code = connection.getResponseCode();
+            log.info("Status code received {}", code);
             return (200 <= code && code <= 399);
         } catch (MalformedURLException e) {
             e.printStackTrace();

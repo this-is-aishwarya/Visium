@@ -10,4 +10,5 @@ import java.util.List;
 public interface MonitorRepository extends MongoRepository<Monitor, String> {
     public List<Monitor> findMonitorByUsername(String username);
     public Monitor findMonitorById(String id);
+    public void deleteById(String id);
 }

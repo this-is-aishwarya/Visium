@@ -24,10 +24,12 @@ public class MonitorController {
     @PostMapping("/createMonitor")
     public ResponseEntity<String> createMonitor(@RequestBody Monitor monitorDetails){
         try{
+            log.info("Monitor details received {}", monitorDetails);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();
             monitorDetails.setUsername(userName);
             monitorService.createNewMonitor(monitorDetails);
+            log.info("Monitor has been created");
             return new ResponseEntity<>("Monitor has been created", HttpStatus.OK);
         } catch (Exception e) {
             log.error(String.valueOf(e.getCause()));
@@ -46,5 +48,21 @@ public class MonitorController {
     public List<MonitorLog> getAllMonitorLog(@PathVariable String monitorId){
         SecurityContextHolder.getContext().getAuthentication();
         return monitorService.getMonitorLog(monitorId);
+    }
+
+    @GetMapping("/deleteMonitor/{monitorId}")
+    public ResponseEntity<String> deleteMonitor(@PathVariable String monitorId){
+        try{
+            SecurityContextHolder.getContext().getAuthentication();
+            monitorService.deleteMonitor(monitorId);
+            return new ResponseEntity<>("Monitor deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @GetMapping("/latestlogs/{monitorId}")
+    public List<MonitorLog> latestlogs(@PathVariable String monitorId){
+            SecurityContextHolder.getContext().getAuthentication();
+            return monitorService.getLatestLogs(monitorId);
     }
 }

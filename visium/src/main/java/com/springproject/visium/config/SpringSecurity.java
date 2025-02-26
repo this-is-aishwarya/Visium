@@ -52,12 +52,13 @@ public class SpringSecurity {
                         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
                         corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
                         corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
+                        corsConfiguration.setExposedHeaders(List.of("Cache-Control", "Content-Language", "Content-Type"));
                         corsConfiguration.setMaxAge(Duration.ofMinutes(5L));
                         return corsConfiguration;
                     }
                 }))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**", "/logs/**").permitAll()
                         .requestMatchers("/monitor/**","/user/**").authenticated()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
