@@ -1,0 +1,55 @@
+.monitorheader{
+    display: flex;
+}
+
+.mondetails{
+    width: 100%;
+}
+
+.monitorTitle{
+    font-size: 40px;
+}
+
+.monitorUrl a{
+    color: #39395c;
+    font-size: 24px;
+}
+
+.monstatus{
+    font-size: 35px;
+    float: right;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.monstatus .up{
+    background-color: green;
+}
+
+.monstatus .down{
+    background-color: red;
+}
+.monstatus .degraded{
+    background-color: grey;
+}
+.actionbtn{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.fibreicon{
+    color: green;
+    padding: 10px;
+}
+.statustime{
+    display: flex;
+    color: rgb(165, 165, 165);
+    margin-top: 20px;
+}
+.time{
+    font-size: 24px;
+}
+.logspanel{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

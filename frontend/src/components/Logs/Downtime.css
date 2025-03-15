@@ -1,0 +1,31 @@
+.downtimepanel{
+    padding: 20px;
+    background-color: #39395c;
+    margin-top: 30px;
+    border-radius: 10px;
+    width: 250px;
+}
+.downtimestats{
+    width: 25%;
+}
+
+.downhead{
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.downbody{
+    text-align: center;
+    font-size: 24px;
+}
+.downstat{
+    margin-top: 36px;
+}
+.downtimerow{
+    margin-top: 2px;
+}
+.downtimepan{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,32 @@
+.quickstats{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-color: #39395c;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+.stat{
+    width: 33%;
+}
+
+.sthead{
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.statbody{
+    text-align: center;
+    font-size: 40px;
+}
+.total{
+    color: gray;
+}
+.totalup{
+    color: green;
+}
+.totaldown{
+    color: red;
+}

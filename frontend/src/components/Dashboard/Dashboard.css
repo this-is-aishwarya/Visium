@@ -1,0 +1,51 @@
+.panel-container{
+    margin: 20px;
+}
+
+.panel-containerdash{
+    display: flex;
+  flex-wrap: wrap;
+}
+
+.display-list{
+    margin-top: 20px;
+    flex: 30%;
+}
+
+.display-details{
+    flex: 60%;
+}
+
+.pad{
+    flex: 10%;
+}
+
+.monitorList{
+    border-radius: 1px;
+}
+
+.status{
+    text-align: center;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status.up{
+    background-color: green;
+    width: 10%;
+}
+.status.down{
+    background-color: red;
+    width: 18%;
+}
+.status.degraded{
+    background-color: grey;
+    width: 30%;
+}
+
+.monitorName{
+    padding: 5px;
+    color: white;
+}

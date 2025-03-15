@@ -1,0 +1,26 @@
+.logpanel{
+    padding: 20px;
+    background-color: #39395c;
+    margin-top: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 544px;
+    margin-right: 10px;
+}
+
+.logs{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+}
+
+.logstat{
+    width: 33%;
+}
+
+.loghead{
+    width: 33%;
+    font-weight: 600;
+}
