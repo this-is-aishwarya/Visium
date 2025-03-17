@@ -17,6 +17,8 @@ Visium is an uptime monitoring tool designed to track website availability, resp
 
 ![Downgraph](https://github.com/this-is-aishwarya/Visium/blob/master/images/visium-downgraph.png)
 
+![Add](https://github.com/this-is-aishwarya/Visium/blob/master/images/visium-add.png)
+
 ## 🛠️ Tech Stack
 
 - **Backend:** Spring Boot, Java
